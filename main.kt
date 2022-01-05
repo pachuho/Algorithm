@@ -1,14 +1,18 @@
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.*
 
 fun main(){
-  val scanner = Scanner(System.`in`)
-  val num1 = scanner.nextInt()
-  val num2 = scanner.nextInt()
+  val br = BufferedReader(InputStreamReader(System.`in`))
+  val token = StringTokenizer(br.readLine())
 
-  // 나누기와 나머지를 통해 자리수 계산
-  println(num1 * (num2 % 10))
-  println(num1 * ((num2 % 100) / 10))
-  println(num1 * (num2 / 100))
-
-  println(num1 * num2)
+  val num1 = token.nextToken().toInt()
+  val num2 = token.nextToken().toInt()
+  if(num1 > num2){
+    println(">")
+  } else if(num1 < num2){
+    println("<")
+  } else {
+    println("==")
+  }
 }
