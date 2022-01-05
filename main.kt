@@ -1,30 +1,14 @@
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.util.StringTokenizer
-
-var inputNumber = mutableListOf<String>()
-var resultNumber = mutableListOf<Int>()
-var total = 0
+import java.util.*
 
 fun main(){
-  // 숫자 두번 입력받기
-  for(i in 1..2){
-    val br = BufferedReader(InputStreamReader(System.`in`))
-    val token = StringTokenizer(br.readLine())
-    inputNumber.add(token.nextToken())
-  }
+  val scanner = Scanner(System.`in`)
+  val num1 = scanner.nextInt()
+  val num2 = scanner.nextInt()
 
-  for(number in inputNumber[1]){
-    val result = inputNumber[0].toInt() * Character.getNumericValue(number)
-    resultNumber.add(result)
-  }
+  // 나누기와 나머지를 통해 자리수 계산
+  println(num1 * (num2 % 10))
+  println(num1 * ((num2 % 100) / 10))
+  println(num1 * (num2 / 100))
 
-  var count = 1
-  for(result in resultNumber.reversed()){
-    println(result)
-
-    total += (result * count)
-    count *= 10
-  }
-  println(total)
+  println(num1 * num2)
 }
