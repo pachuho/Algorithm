@@ -5,7 +5,7 @@ import java.io.InputStreamReader
 import java.util.*
 import kotlin.collections.ArrayList
 
-// 덩치
+// 7568
 fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val n = br.readLine().toInt()
