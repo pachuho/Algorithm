@@ -26,10 +26,12 @@ fun main(){
 
 fun recursive(loop: Int, times: Int){
     if(loop == 0){
-        comments.forEach{
-            printUnder(times)
-            bw.write(it)
-        }
+        printUnder(times)
+        bw.write(comments[0])
+        printUnder(times)
+        bw.write("\"재귀함수는 자기 자신을 호출하는 함수라네\"\n")
+        printUnder(times)
+        bw.write("라고 답변하였지.\n")
         return
     }
 
