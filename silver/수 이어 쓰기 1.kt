@@ -7,20 +7,24 @@ import java.io.InputStreamReader
 fun main(){
     val br = BufferedReader(InputStreamReader(System.`in`))
     val n = br.readLine().toInt()
-    var length = 0
+    var sum = 0
 
-    for(i in 1 .. n){
-        when(i){
-            in 1..9 -> length++
-            in 10..99 -> length += 2
-            in 100..999 -> length += 3
-            in 1000..9999 -> length += 4
-            in 10000..99999 -> length += 5
-            in 100000..999999 -> length += 6
-            in 1000000..9999999 -> length += 7
-            in 10000000..99999999 -> length += 8
-            else -> length += 9
-        }
+    for(i in 1..n){
+        sum += i.getDigit()
     }
-    println(length)
+
+    println(sum)
 }
+
+fun Int.getDigit(): Int{
+    var temp = this
+    var digit = 0
+
+    while (temp != 0){
+        temp /= 10
+        digit++
+    }
+    return digit
+}
+
+// when문을 통한 하드코딩의 경우 코드가 한정적이라는 단점이 있지만 시간이 약 3배 줄어들었다. 계산하는 것 보단 숫자를 대응시키는게 훨씬 바르다는걸 알게 되었다.
