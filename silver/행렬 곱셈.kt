@@ -7,7 +7,6 @@ import java.util.*
 // 2740
 fun main(){
     val br = BufferedReader(InputStreamReader(System.`in`))
-    val stringBuilder = StringBuilder()
 
     val (m1, k1) = br.readLine().split(" ").map { it.toInt() } // 3 2
     val arrayA: Array<IntArray> = Array(m1) {IntArray(k1)}
@@ -29,15 +28,20 @@ fun main(){
         }
     }
 
-    repeat(m1){ x -> // 3
-        repeat(k2){ y -> // 3
+    calculateArray(m1, k2, k1, arrayA, arrayB)
+}
+
+fun calculateArray(xSize: Int, ySize: Int, midSize: Int, arrayA: Array<IntArray>, arrayB: Array<IntArray>){
+    val stringBuilder = StringBuilder()
+
+    repeat(xSize){ x -> // 3
+        repeat(ySize){ y -> // 3
             var sum = 0
 
-            repeat(m2){ i -> // 2
+            repeat(midSize){ i -> // 2
                 sum += arrayA[x][i] * arrayB[i][y]
             }
-            stringBuilder.append("$sum")
-            if(y != k2-1) stringBuilder.append(" ")
+            stringBuilder.append("$sum ")
         }
         stringBuilder.append("\n")
     }
