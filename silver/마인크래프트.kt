@@ -1,51 +1,64 @@
 package silver
 
+import java.math.BigInteger
 import java.util.*
 
 // 18111
 fun main()= with(System.`in`.bufferedReader()){
-    /*
-    n = 세로
-    m = 가로
-    b = 인벤토리 블록 개수
-     */
+
     val (n, m ,b) = readLine().split(" ").map { it.toInt() }
-    val ground = Array(n){IntArray(m)}
+    val ground = arrayListOf<Int>()
+    var sum = BigInteger("0")
 
-    for (y in 0 until n){
+    repeat(n){
         val tokenizer = StringTokenizer(readLine())
-        for(x in 0 until m){
-            ground[y][x] = tokenizer.nextToken().toInt()
+        repeat(m){
+            ground.add(tokenizer.nextToken().toInt())
         }
     }
 
-    val sortedGround = getSortedHeight(n, m, ground)
-    val mappingGround = countHeight(sortedGround)
-    println(checkTime(b, mappingGround))
+    ground.forEach { sum += it.toBigInteger() }
+
+    val result = levelingTheGround(ground, n, m, b, sum)
+    println(result.toList().joinToString(" "))
 }
 
-// 1. 땅 높이 정렬
-fun getSortedHeight(n: Int, m:Int, array: Array<IntArray>): List<Int> {
-    val sortedArray = arrayListOf<Int>()
-    for (i in 0 until n) {
-        for (j in 0 until m) {
-            sortedArray.add(array[i][j])
+fun levelingTheGround(arr: ArrayList<Int>, n: Int, m: Int, b: Int,sum: BigInteger): Pair<Int, Int> {
+    val indexSize = n * m
+    var minTime = Int.MAX_VALUE //시간비교를 위해 정수 최대값으로 선언
+    var mHeight = 0 //최종 높이
+    var maxHeight = (sum.plus(b.toBigInteger())).divide((n*m).toBigInteger())
+    //maxHeight = 가지고있는 블럭과 입력받은 집터의 높이의 합과 나누기 집터의 크기를 통해
+    //땅의 높이가 같으면서 최대로 만들 수 있는 높이를 계산할 수 있다.
+    val max = 256 //문제에서 주어진 땅의 최대 높이
+
+    if (maxHeight.compareTo(max.toBigInteger()) == 1) {//maxHeight가 max보다 크다면
+        max.also { maxHeight = it.toBigInteger() }
+    } else {
+        maxHeight.toInt()
+    }
+    for (height in 0..maxHeight.toInt()) {
+        var time = 0
+        for (i in 0 until indexSize) {
+            //전부 돌면서 체크할거라 횟수 의미 x
+            if (arr[i] < height) {
+                val gap = height - arr[i]
+                time += gap
+            } else if (arr[i] > height) {
+                val gap = arr[i] - height
+                time += gap * 2
+            }
+        }
+        if (minTime >= time) {
+            minTime = time
+            mHeight = height
         }
     }
-
-    return sortedArray.sortedDescending()
-}
-
-fun countHeight(array: List<Int>): Map<Int, Int> {
-    return array.groupingBy { it }.eachCount()
-}
-
-// 3. 가진 블록 개수로 처리 가능한지 체크하며 시간초 계산
-fun checkTime(blocks: Int, ground: Map<Int, Int>): Int{
+    return Pair(minTime, mHeight)
 }
 /*
-3 4 99
-0 0 0 0
-0 2 2 2
-0 0 0 1
+3 4 1
+64 64 64 64
+64 64 64 64
+64 64 64 63
  */
